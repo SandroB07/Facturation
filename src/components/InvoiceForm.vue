@@ -51,6 +51,15 @@
 			"LineForm": LineForm,
 		},
 
+		setup() {
+			const invoiceStore = useInvoiceStore();
+
+			return {
+				invoiceStore,
+				fullName: invoiceStore.clientFullName
+			}
+		},
+
 		data() {
 			return {
 				// invoice: {
@@ -86,14 +95,6 @@
 
 				return total;
 			},
-			clientFullName() {
-				return `${this.invoices[this.getIndex()].client.firstname} ${this.invoices[this.getIndex()].client.lastname} (${this.invoices[this.getIndex()].client.phoneNumber})`;
-			},
-
-			...mapState(useInvoiceStore, ['invoices']),
-			...mapActions(useInvoiceStore, {
-				addLine: 'addInvoiceLine'
-			})
 		},
 		methods: {
 			addLine() {

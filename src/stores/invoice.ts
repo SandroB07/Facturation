@@ -1,4 +1,5 @@
-import { defineStore, mapState, mapStores } from 'pinia'
+import { defineStore, mapState, mapStores } from 'pinia';
+import { watch } from 'vue'
 
 export const useInvoiceStore = defineStore('invoiceStore', {
   
@@ -47,8 +48,26 @@ export const useInvoiceStore = defineStore('invoiceStore', {
 
     getInvoiceById: (state) => {
       return (invoiceId: number) => state.invoices.find((invoice) => invoice.id == invoiceId)
-    } 
+    },
+    
+    totalPrice(state) {
+      
+      return function(idx) {
+        let total = 0;
+        for (let line in state.invoices[idx].lines) {
+          console.log(line.quantity + " " + line.price);
+          total += Number(line.quantity) * Number(line.price);
+        }
+        return total;
+      }
+    },
 
+    clientFullName: (state) => {
+      return (idx: number) => {
+        return `${state.invoices[idx].client.firstname} ${state.invoices[idx].client.lastname} (${state.invoices[idx].client.phoneNumber})`
+      }
+    }
+    
   },
   
   actions: {
@@ -61,7 +80,7 @@ export const useInvoiceStore = defineStore('invoiceStore', {
       this.invoices.push(invoice);
     }
 
-  }
+  },
 
 })
 

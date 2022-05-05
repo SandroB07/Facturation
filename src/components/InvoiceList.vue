@@ -16,9 +16,9 @@
 
       <tr v-if="this.invoiceStore.invoices" v-for="invoice in this.invoiceStore.invoices" @click="handleChangeToInvoiceView(invoice.id)">
         <td>{{ invoice.id + 1 }}</td>
-        <td>{{ invoice.client.firstname + " " + invoice.client.lastname }}</td>
-        <td>{{ invoice.date }}</td>
-        <td></td>
+        <td>{{ fullName(invoice.id) }}</td>
+        <td>{{ invoice.dueDate }}</td>
+        <td>{{ totalPrice(invoice.id) }}</td>
       </tr>
   </table>
 </template>
@@ -36,19 +36,25 @@ import router from '../router/index';
     setup() {
       const invoiceStore =  useInvoiceStore() ;
 
-      return {invoiceStore}
+      return {
+        invoiceStore,
+        totalPrice: invoiceStore.totalPrice,
+        fullName: invoiceStore.clientFullName
+      }
     },
 
     computed: {
         clientFullName: (invoice) => {
             return `${invoice.client.firstname} ${invoice.client.lastname}`;
-        }
+        },
+
+        
     },
     components: { InvoiceLine },
     methods: {
       handleChangeToInvoiceView: (index: number) => {
         router.push({path: '/invoice/' + index})
-      }
+      },
     }
 }
 </script>
