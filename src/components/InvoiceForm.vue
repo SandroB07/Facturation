@@ -1,6 +1,6 @@
 <template>
 	<h1>Facture</h1>
-	<p>Client : {{ clientFullName }}</p>
+	<p>Client : {{ this.fullName(getIndex()) }}</p>
 	<p>TVA : {{ this.invoices[getIndex()].vat }} %</p>
 	<p>Échéance : {{ this.invoices[getIndex()].dueDate }}</p>
 	<p>Prix total : {{ totalPrice }}</p>
@@ -38,7 +38,6 @@
 	import Line from "./Line.vue";
 	import LineForm from "./LineForm.vue";
 	import { useInvoiceStore } from '@/stores/invoice';
-	import { mapActions, mapState } from 'pinia';
 
 
 	export default {
@@ -55,7 +54,7 @@
 			const invoiceStore = useInvoiceStore();
 
 			return {
-				invoiceStore,
+				invoices: invoiceStore.invoices,
 				fullName: invoiceStore.clientFullName
 			}
 		},

@@ -25,9 +25,7 @@
 
 <script lang="ts">
   import { useInvoiceStore } from "@/stores/invoice";
-  import { mapState, storeToRefs } from "pinia";
-  import InvoiceLine from "./InvoiceLine.vue";
-import router from '../router/index';
+  import router from '../router/index';
 
   // const invoiceStore = storeToRefs(useInvoiceStore());
   // const invoiceStore = useInvoiceStore()
@@ -50,7 +48,7 @@ import router from '../router/index';
 
         
     },
-    components: { InvoiceLine },
+
     methods: {
       handleChangeToInvoiceView: (index: number) => {
         router.push({path: '/invoice/' + index})
